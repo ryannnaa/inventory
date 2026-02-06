@@ -4,6 +4,7 @@ import CurrentRentals from './components/CurrentRentals'
 import DeliverySchedule from './components/DeliverySchedule'
 import UpcomingReturns from './components/UpcomingReturns'
 import LowAvailabilityAlert from './components/LowAvailabilityAlert'
+import ProductManagement from './components/ProductManagement'
 import './App.css'
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
     <div className="app">
       <header className="app-header">
         <h1>📦 Rental Inventory Management System</h1>
-        <p>Company ABC - Event Furniture Rental</p>
+        <p>Company ABC - Event Furniture Rental (with Redis Caching)</p>
       </header>
 
       <nav className="app-nav">
@@ -22,6 +23,12 @@ function App() {
           onClick={() => setCurrentView('search')}
         >
           🔍 Search Inventory
+        </button>
+        <button 
+          className={currentView === 'products' ? 'active' : ''}
+          onClick={() => setCurrentView('products')}
+        >
+          📦 Manage Products
         </button>
         <button 
           className={currentView === 'rentals' ? 'active' : ''}
@@ -44,10 +51,11 @@ function App() {
       </nav>
 
       <main className="app-main">
-        <LowAvailabilityAlert />
+        {currentView !== 'products' && <LowAvailabilityAlert />}
 
         <div className="content">
           {currentView === 'search' && <InventorySearch />}
+          {currentView === 'products' && <ProductManagement />}
           {currentView === 'rentals' && <CurrentRentals />}
           {currentView === 'deliveries' && <DeliverySchedule />}
           {currentView === 'returns' && <UpcomingReturns />}
@@ -55,7 +63,7 @@ function App() {
       </main>
 
       <footer className="app-footer">
-        <p>Rental Inventory Management System v1.0 | Database Final Project</p>
+        <p>Rental Inventory Management System v2.0 (Redis-Powered) | Database Final Project</p>
       </footer>
     </div>
   )
